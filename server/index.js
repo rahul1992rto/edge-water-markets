@@ -5,7 +5,6 @@ const app = express();
 const server = require('http').createServer(app);
 const wss = new WebSocket.Server({ server });
 const COINBASE_WS_URL = 'wss://ws-feed-public.sandbox.exchange.coinbase.com';
-// wss://ws-feed.pro.coinbase.com
 
 
 // Store subscriptions and clients
@@ -37,6 +36,7 @@ wss.on('connection', (client) => {
 function subscribeToProduct(clientId, product_id) {
     const clientData = clients.get(clientId);
     console.log(clientId)
+    console.log(product_id)
     if (!clientData.subscriptions.has(product_id)) {
     console.log("inside")
 
@@ -59,13 +59,12 @@ coinbaseWs.on('message', (data) => {
     // console.log("inside distributeMessage")
 
     const message = JSON.parse(data);
-    console.log("message")
-    console.log(message)
-    console.log("message")
+    console.log("type : " + message.type)
     distributeMessage(message);
 });
 
 function sendToCoinbase(message) {
+    
     coinbaseWs.send(JSON.stringify(message));
 }
 
@@ -76,4 +75,11 @@ function distributeMessage(message) {
         }
     });
 }
+coinbaseWs.on('close', () => {
+    console.log('Coinbase WebSocket disconnected');
+});
+
+coinbaseWs.on('error', (error) => {
+    console.error('Coinbase WebSocket error:', error);
+});
 server.listen(4000, () => console.log('Server running on port 4000'));
