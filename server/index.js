@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const app = express();
 const server = require('http').createServer(app);
 const wss = new WebSocket.Server({ server });
-const COINBASE_WS_URL = 'wss://ws-feed.pro.coinbase.com';
+const COINBASE_WS_URL = 'wss://ws-feed-public.sandbox.exchange.coinbase.com';
 
 // Store subscriptions and clients
 const clients = new Map();
@@ -34,7 +34,10 @@ wss.on('connection', (client) => {
 
 function subscribeToProduct(clientId, product_id) {
     const clientData = clients.get(clientId);
+    console.log(clientId)
     if (!clientData.subscriptions.has(product_id)) {
+    console.log("inside")
+
         clientData.subscriptions.add(product_id);
         sendToCoinbase({ type: 'subscribe', channels: [{ name: 'level2', product_ids: [product_id] }, { name: 'matches', product_ids: [product_id] }] });
     }
@@ -42,6 +45,8 @@ function subscribeToProduct(clientId, product_id) {
 
 function unsubscribeFromProduct(clientId, product_id) {
     const clientData = clients.get(clientId);
+    console.log(clientId)
+
     clientData.subscriptions.delete(product_id);
     sendToCoinbase({ type: 'unsubscribe', channels: [{ name: 'level2', product_ids: [product_id] }, { name: 'matches', product_ids: [product_id] }] });
 }
@@ -49,6 +54,7 @@ function unsubscribeFromProduct(clientId, product_id) {
 // Coinbase WebSocket connection for receiving updates
 const coinbaseWs = new WebSocket(COINBASE_WS_URL);
 coinbaseWs.on('message', (data) => {
+    console.log("inside distributeMessage")
     const message = JSON.parse(data);
     distributeMessage(message);
 });

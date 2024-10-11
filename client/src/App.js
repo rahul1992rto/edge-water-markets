@@ -16,12 +16,19 @@ const App = () => {
 
         websocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log(data);
+            console.log("data")
+            console.log(data)
+            console.log("data")
             if (data.type === 'level2') setLevel2Data(data);
             if (data.type === 'match') setMatchData((prev) => [data, ...prev.slice(0, 10)]);
+            // websocket.close();
         };
+        websocket.onclose = () => {
+            console.log('closing connection')
+            websocket.close()
+          }
 
-        return () => websocket.close();
+        // return () => websocket.close();
     }, []);
 
     const handleSubscribe = (product) => {
