@@ -13,11 +13,11 @@ const Subscribe = ({ onSubscribe, onUnsubscribe, subscriptions }) => {
             </select>
             <button onClick={() => onSubscribe(product)}>Subscribe</button>
             <button onClick={() => onUnsubscribe(product)}>Unsubscribe</button>
-            <ul>
+            {/* <ul>
                 {Array.from(subscriptions).map((sub) => (
                     <li key={sub}>{sub}</li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 };

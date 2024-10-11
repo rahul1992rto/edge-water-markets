@@ -5,6 +5,8 @@ const app = express();
 const server = require('http').createServer(app);
 const wss = new WebSocket.Server({ server });
 const COINBASE_WS_URL = 'wss://ws-feed-public.sandbox.exchange.coinbase.com';
+// wss://ws-feed.pro.coinbase.com
+
 
 // Store subscriptions and clients
 const clients = new Map();
@@ -54,8 +56,12 @@ function unsubscribeFromProduct(clientId, product_id) {
 // Coinbase WebSocket connection for receiving updates
 const coinbaseWs = new WebSocket(COINBASE_WS_URL);
 coinbaseWs.on('message', (data) => {
-    console.log("inside distributeMessage")
+    // console.log("inside distributeMessage")
+
     const message = JSON.parse(data);
+    console.log("message")
+    console.log(message)
+    console.log("message")
     distributeMessage(message);
 });
 

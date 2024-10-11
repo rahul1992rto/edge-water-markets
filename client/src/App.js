@@ -19,7 +19,7 @@ const App = () => {
             console.log("data")
             console.log(data)
             console.log("data")
-            if (data.type === 'level2') setLevel2Data(data);
+            if (data.type === 'l2update') setLevel2Data(data);
             if (data.type === 'match') setMatchData((prev) => [data, ...prev.slice(0, 10)]);
             // websocket.close();
         };
@@ -47,12 +47,12 @@ const App = () => {
 
     return (
         <div>
-            <SystemStatus channels={Array.from(subscriptions)} />
             <Subscribe
                 onSubscribe={handleSubscribe}
                 onUnsubscribe={handleUnsubscribe}
                 subscriptions={subscriptions}
             />
+            <SystemStatus channels={Array.from(subscriptions)} />
             <PriceView level2Data={level2Data} />
             <MatchView matchData={matchData} />
         </div>
