@@ -1,0 +1,73 @@
+/* Main Container Styling */
+.app-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 1.5fr; /* Increased width for Match View */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f7fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Component Box Styling */
+.component-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Subscribe Container Styling */
+.subscribe-container {
+    background-color: #e8f0fe; /* Different background color for visibility */
+    border: 1px solid #d1e1fd; /* Border to define the container */
+}
+
+/* Match View Table Styling */
+.match-view {
+    width: 780px; /* Ensure it takes full width of the container */
+    overflow-x: auto; /* Allow horizontal scrolling for overflow */
+}
+
+.match-view table {
+    width: 780px; /* Full width */
+    border-collapse: collapse;
+}
+
+.match-view th,
+.match-view td {
+    padding: 10px 15px; /* Adjusted padding for better spacing */
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.match-view th {
+    background-color: #f9fafb; /* Light background for headers */
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr; /* Stack components on smaller screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        grid-template-columns: 250px 1fr 1.5fr; /* Subscribe section on the left, match view wider */
+    }
+}
+
+@media (min-width: 1024px) {
+    .app-container {
+        grid-template-columns: 250px 1fr 1.5fr; /* Three columns for larger devices */
+    }
+
+    .subscribe-container {
+        grid-column: 1; /* Keep subscribe in the first column */
+    }
+}
+ 

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../style.css';
 const SystemStatus = ({ channels }) => (
     <div>
         <h2>System Status</h2>

@@ -1,30 +1,32 @@
 import React from 'react';
+import '../style.css';
 
 const MatchView = ({ matchData }) => (
-    <div>
+    <div className="match-view">
         <h2>Match View</h2>
         {matchData.length ? (
-            <div>
-                {/* Header Row */}
-                <div style={{ display: 'flex', fontWeight: 'bold', marginBottom: '8px' }}>
-                    <span style={{ flex: 1 }}>TimeStamp</span>
-                    <span style={{ flex: 1 }}>Product</span>
-                    <span style={{ flex: 1 }}>Size</span>
-                    <span style={{ flex: 1 }}>Price</span>
-                </div>
-
-                {/* Match Data Rows */}
-                {matchData.map((match, index) => (
-                    <div key={index} style={{ display: 'flex', color: match.side === 'buy' ? 'green' : 'red' }}>
-                        <span style={{ flex: 1 }}>{match.time}</span>
-                        <span style={{ flex: 1 }}>{match.product_id}</span>
-                        <span style={{ flex: 1 }}>{match.size}</span>
-                        <span style={{ flex: 1 }}>{match.price}</span>
-                    </div>
-                ))}
-            </div>
+            <table className="match-table">
+                <thead>
+                    <tr>
+                        <th>TimeStamp</th>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {matchData.map((match, index) => (
+                        <tr key={index}>
+                            <td>{match.time}</td>
+                            <td>{match.product_id}</td>
+                            <td className={match.side === 'buy' ? 'buy' : 'sell'}>{match.size}</td>
+                            <td className={match.side === 'buy' ? 'buy' : 'sell'}>{match.price}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         ) : (
-            <p>No Match Data Available</p>
+            <p className="no-data">No Match Data Available</p>
         )}
     </div>
 );

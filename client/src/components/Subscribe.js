@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import '../style.css';
 const Subscribe = ({ onSubscribe, onUnsubscribe, subscriptions }) => {
     const [product, setProduct] = useState('BTC-USD');
 

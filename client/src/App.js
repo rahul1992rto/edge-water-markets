@@ -1,62 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import Subscribe from './components/Subscribe';
-import PriceView from './components/PriceView';
-import MatchView from './components/MatchView';
-import SystemStatus from './components/SystemStatus';
-
-const App = () => {
-    const [ws, setWs] = useState(null);
-    const [subscriptions, setSubscriptions] = useState(new Set());
-    const [level2Data, setLevel2Data] = useState({});
-    const [matchData, setMatchData] = useState([]);
-
-    useEffect(() => {
-        const websocket = new WebSocket('ws://localhost:4000');
-        setWs(websocket);
-
-        websocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log("data")
-            console.log(data)
-            console.log("data")
-            if (data.type === 'l2update') setLevel2Data(data);
-            if (data.type === 'match') setMatchData((prev) => [data, ...prev.slice(0, 10)]);
-            // websocket.close();
-        };
-        websocket.onclose = () => {
-            console.log('closing connection')
-            websocket.close()
-          }
-
-        // return () => websocket.close();
-    }, []);
-
-    const handleSubscribe = (product) => {
-        setSubscriptions((prev) => new Set(prev.add(product)));
-        ws.send(JSON.stringify({ type: 'subscribe', product_id: product }));
-    };
-
-    const handleUnsubscribe = (product) => {
-        setSubscriptions((prev) => {
-            const newSet = new Set(prev);
-            newSet.delete(product);
-            return newSet;
-        });
-        ws.send(JSON.stringify({ type: 'unsubscribe', product_id: product }));
-    };
-
+import React, {  useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
     return (
-        <div>
-            <Subscribe
-                onSubscribe={handleSubscribe}
-                onUnsubscribe={handleUnsubscribe}
-                subscriptions={subscriptions}
-            />
-            <SystemStatus channels={Array.from(subscriptions)} />
-            <PriceView level2Data={level2Data} />
-            <MatchView matchData={matchData} />
-        </div>
+      <Router>
+        <Routes>
+        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route
+            path="/dashboard"
+            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+          />
+        </Routes>
+      </Router>
     );
-};
-
-export default App;
+  }
+  
+  export default App;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import '../style.css';
 const PriceView = ({ level2Data }) => {
     const [displayData, setDisplayData] = useState(null);
 
