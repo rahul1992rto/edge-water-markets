@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Subscribe from './Subscribe';
-import PriceView from './PriceView';
-import MatchView from './MatchView';
-import SystemStatus from './SystemStatus';
+import Subscribe from '../components/Subscribe';
+import PriceView from '../components/PriceView';
+import MatchView from '../components/MatchView';
+import SystemStatus from '../components/SystemStatus';
 // import '../style.css';
 
 const App = () => {
@@ -18,9 +18,6 @@ const App = () => {
 
         websocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log("data")
-            console.log(data)
-            console.log("data")
             if (data.type === 'l2update') setLevel2Data(data);
             if (data.type === 'match') setMatchData((prev) => [data, ...prev.slice(0, 5)]);
             // websocket.close();
