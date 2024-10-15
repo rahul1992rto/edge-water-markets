@@ -19,8 +19,19 @@
 6. **Inside client**:
    cd ..
    cd .\client
-6. **Start client**:
+7. **Start client**:
    npm start
 
+ 8. **Login page**:  
+  Dummy Credentials
    useraname : testuser
    password  : testpass
+( refer screenshot login.PNG)
+
+ 9. **Click Subscribe button**:  
+
+( refer screenshot subscribe.PNG)
+
+ 10. **Click Unsubscribe button**:  
+
+( refer screenshot unsubscribe.PNG)
