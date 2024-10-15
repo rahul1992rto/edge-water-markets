@@ -21,3 +21,6 @@
    cd .\client
 6. **Start client**:
    npm start
+
+   useraname : testuser
+   password  : testpass
