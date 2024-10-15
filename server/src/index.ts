@@ -11,6 +11,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (client: WebSocket, req) => {
+    
     const token = new URLSearchParams(req.url?.split('?')[1]).get('token');
     const decoded = token ? verifyToken(token) : null;
     if (!decoded) {
@@ -26,10 +27,10 @@ wss.on('connection', (client: WebSocket, req) => {
         
         if (type === 'subscribe') {
             subscribeToProduct(clientId, product_id);
-            sendToCoinbase({ type: 'subscribe', channels: [{ name: 'level2', product_ids: [product_id] }] });
+            sendToCoinbase({ type: 'subscribe', channels: [{ name: 'level2', product_ids: [product_id] },{ name: 'matches', product_ids: [product_id] }] });
         } else if (type === 'unsubscribe') {
             unsubscribeFromProduct(clientId, product_id);
-            sendToCoinbase({ type: 'unsubscribe', channels: [{ name: 'level2', product_ids: [product_id] }] });
+            sendToCoinbase({ type: 'unsubscribe', channels: [{ name: 'level2', product_ids: [product_id] },{ name: 'matches', product_ids: [product_id] }] });
         }
     });
 
