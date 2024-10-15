@@ -9,6 +9,6 @@
       "module": "CommonJS",
       "strict": true
     },
-    "include": ["src/**/*.ts"]
+"include": ["src/**/*.ts", "src/@types/env.d.ts"],
   
 }
